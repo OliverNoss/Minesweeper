@@ -3,13 +3,13 @@
 import de.bezier.guido.*;
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
-public final static int NUM_BOMBS = 10;
+public final static int NUM_BOMBS = 40;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of just the minesweeper buttons that are mined
 
 void setup ()
 {
-    size(400, 400);
+    size(400, 420);
     textAlign(CENTER,CENTER);
     
     // make the manager
@@ -58,7 +58,7 @@ public void draw ()
         }*/
         if(isWon()){
             displayWinningMessage();
-        System.out.println(1234567);
+        // System.out.println(1234567);
         // background( 0 );
     }
 }
@@ -78,29 +78,31 @@ public void draw ()
 }
 public void displayLosingMessage()
 {
-    textSize(50);
+    for (int i = 0; i < NUM_ROWS; i++) {
+        for (int j = 0; j < NUM_COLS; j++) {
+            if (bombs.contains(buttons[i][j]) && !buttons[i][j].isClicked())
+                buttons[i][j].mousePressed();
+        }
+    }
+    textSize(20);
     fill(255,0,0);
-    text("You Lose.", 200,200);
-    System.out.println("Lose1");
+    text("You Lose.", 200, 408);
+    // System.out.println("Lose1");
     noLoop();
-      text("You Lose.", 200,200);
-      System.out.println("Lose2");
-    
-    
+      // text("You Lose.", 200,200);
+      // System.out.println("Lose2"); 
 }
 public void displayWinningMessage()
 {
-     textSize(50);
-    fill(255,0,0);
-    text("You Win.", 200,200);
-          System.out.println("Win1");
+     textSize(20);
+    fill(0,100,0);
+    text("You Win.", 200, 408);
+          // System.out.println("Win1");
 
     noLoop();
-        text("You Win.", 200,200);
-              System.out.println("Win2");
-
-
-}
+        // text("You Win.", 200,200);
+        //       System.out.println("Win2");
+    }
 
 public class MSButton
 {
@@ -133,10 +135,10 @@ public class MSButton
     
     public void mousePressed () 
     {
-        if (mouseButton==LEFT&&!marked)
+        if (mouseButton == LEFT && !marked)
             clicked = true;
-        if (mouseButton==RIGHT&&!clicked)
-            marked=!marked;
+        if (mouseButton == RIGHT && !clicked)
+            marked =! marked;
         else if (bombs.contains(this)) {
             displayLosingMessage();
         }// }
@@ -220,13 +222,4 @@ public class MSButton
     return numBombs;
 }
 }
-
-/*&&buttons[row+1][col+1].isValid()
-&&buttons[row-1][col-1].isValid()
-&&buttons[row+1][col-1].isValid()
-&&buttons[row-1][col+1].isValid()
-&&buttons[row][col+1].isValid()
-&&buttons[row+1][col].isValid()
-&&buttons[row][col-1].isValid()
-&&buttons[row-1][col].isValid()*/
 
