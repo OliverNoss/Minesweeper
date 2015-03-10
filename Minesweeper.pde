@@ -81,8 +81,8 @@ public void displayLosingMessage()
         for (int j = 0; j < NUM_COLS; j++) {
             // cursor(WAIT);
             if(buttons[i][j].isMarked()) {buttons[i][j].unMark();}
-            if (bombs.contains(buttons[i][j]) && !buttons[i][j].isClicked())
-                buttons[i][j].mousePressed();
+            if (bombs.contains(buttons[i][j])) //&& !buttons[i][j].isClicked())
+                buttons[i][j].clickIt();
         }
     }
     textSize(20);
@@ -135,6 +135,9 @@ public class MSButton
     public boolean isClicked()
     {
         return clicked;
+    }
+    public void clickIt() {
+        clicked=true;
     }
     // called by manager
     
