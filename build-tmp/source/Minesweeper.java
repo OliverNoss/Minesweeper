@@ -76,7 +76,6 @@ public void draw ()
         }*/
         if(isWon()){
             displayWinningMessage();
-        // System.out.println(1234567);
         // background( 0 );
     }
 }
@@ -98,6 +97,8 @@ public void displayLosingMessage()
 {
     for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_COLS; j++) {
+            // cursor(WAIT);
+            if(buttons[i][j].isMarked()) {buttons[i][j].unMark();}
             if (bombs.contains(buttons[i][j]) && !buttons[i][j].isClicked())
                 buttons[i][j].mousePressed();
         }
@@ -105,21 +106,21 @@ public void displayLosingMessage()
     textSize(20);
     fill(255,0,0);
     text("You Lose.", 200, 408);
-    // System.out.println("Lose1");
+    
     noLoop();
       // text("You Lose.", 200,200);
-      // System.out.println("Lose2"); 
+      
 }
 public void displayWinningMessage()
 {
      textSize(20);
     fill(0,100,0);
     text("You Win.", 200, 408);
-          // System.out.println("Win1");
+          
 
     noLoop();
         // text("You Win.", 200,200);
-        //       System.out.println("Win2");
+        
     }
 
 public class MSButton
@@ -145,6 +146,10 @@ public class MSButton
     {
         return marked;
     }
+    public void unMark()
+    {
+        marked = false;
+    }
     public boolean isClicked()
     {
         return clicked;
@@ -157,13 +162,13 @@ public class MSButton
             clicked = true;
         if (mouseButton == RIGHT && !clicked)
             marked =! marked;
-        else if (bombs.contains(this)) {
+        else if (!marked && bombs.contains(this)) {
             displayLosingMessage();
         }// }
-        else if (countBombs(r,c)>0)
-            label = nf(countBombs(r,c),1);
+        else if (!marked && countBombs(r,c)>0)
+            setLabel(""+countBombs(r,c)+"");
         else   
-        {
+        {if (!marked){
             if (isValid(r+1,c+1))
                 if (!buttons[r+1][c+1].isClicked()) 
                 buttons[r+1][c+1].mousePressed();
@@ -188,6 +193,7 @@ public class MSButton
             if (isValid(r-1,c))
                 if (!buttons[r-1][c].isClicked()) 
                 buttons[r-1][c].mousePressed();
+        }
         }
     }
     
